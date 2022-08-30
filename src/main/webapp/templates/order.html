@@ -1,0 +1,243 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xml:lang="en" lang="en" class="bx-core bx-no-touch bx-no-retina bx-chrome">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="MobileOptimized" content="width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Application</title>
+
+    <style>
+    .form-center{
+	padding: 50px;
+	background: #ccc;
+	position: fixed; top: 50%; left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	}
+    .form-retreat {
+     margin-bottom: 2rem;
+    }
+    .form-control-string {
+     margin-bottom: 1rem;
+    }
+
+.submit1 {
+    background-color: #008CBA;
+    padding: 14px 40px;
+    color: white;
+    font-size: 15pt;
+    border-radius: 12px;
+   }
+.inscription-authorization {
+    color: green;
+    font-size: 9pt;
+   }
+.inscription-error {
+    color: red;
+    font-size: 9pt;
+   }
+    </style>
+</head>
+<body>
+
+<div class="form-center">
+    <!--#if expr=(str = ${Authorization}) -->
+    <div th:text="${Authorization}" class="inscription-authorization"></div>
+    <!--endif-->
+    <!--#if expr=(str = ${error}) -->
+    <b1 th:text="${error}" class="inscription-error"></b1>
+    <!--endif-->
+    <h1>Filing of the application on the spot </h1>
+    <form action="/confirmation" method="GET">
+        <div class="form-retreat">
+            <div class="form-control-string">
+                <div>
+                    <div>
+                        <div>
+                            <div class="form-control-label">
+                                <b> Name </b>
+                                <span>
+									*
+								</span>
+                            </div>
+                            <input autocomplete="given-name" class="form-control" name="name" type="string">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-control-string">
+                <div>
+                    <div>
+                        <div class="form-control-container form-control-icon-after">
+                            <div class="form-control-label">
+                                <b> Last name </b>
+                                <span>
+									*
+								</span>
+                            </div>
+                            <input autocomplete="family-name" name="surname" type="string" class="form-control">
+                        </div>
+                    </div> <!----> <!---->
+                </div> <!---->
+            </div>
+            <div class="form-control-string">
+                <div>
+                    <div>
+                        <div>
+                            <div class="form-control-container form-control-icon-after">
+                                <b> Birth date </b>
+                            </div> <!----> <!---->
+                            <input name="birth_date" type="date" class="form-control">
+                            <div class="form-control-label">
+                                <div class="form-control-alert-message" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="form-dropdown"><!---->
+                            </div>
+                        </div>
+                    </div> <!----> <!---->
+                </div> <!---->
+            </div>
+            <div class="form-control-string">
+                <div>
+                    <div>
+                        <div class="form-control-container form-control-icon-after">
+                            <div class="form-control-label">
+                                <b> Phone </b>
+                                <span>
+									*
+								</span>
+                            </div> <!----> <!---->
+                            <input autocomplete="tel" name="phone" type="tel" class="form-control">
+                        </div>
+                    </div> <!----> <!---->
+                </div> <!---->
+            </div>
+            <div class="form-control-string"><!---->
+                <div>
+                    <div>
+                        <div class="form-control-container form-control-icon-after">
+                            <div class="form-control-label">
+                                <b> The area where the humanitarian woman should be delivered </b>
+                                <div>
+                                    <select name="area" >
+                                        <option value="area1">Alekseevka</option>
+                                        <option value="area2">Saltovka</option>
+                                        <option value="area3">Center</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div> <!---->
+                        <div class="form-dropdown"><!---->
+                        </div>
+                    </div> <!---->
+                </div>
+            </div>
+            <div class="form-control-string">
+                <div>
+                    <div>
+                        <div class="form-control-container form-control-icon-after">
+                            <div class="form-control-label">
+                                <b> Street (Name only) </b>
+                                <span class="form-control-required" style="display: none;">
+									*
+								</span>
+                            </div>
+                            <input name="street" type="string" class="form-control">
+                            <!----> <!---->
+                            <div class="form-control-alert-message" style="display: none;">
+                            </div>
+                        </div>
+                    </div> <!----> <!---->
+                </div> <!---->
+            </div>
+            <div class="form-control-string">
+                <div>
+                    <div>
+                        <div class="form-control-container form-control-icon-after">
+                            <div class="form-control-label">
+                                <b> House number </b>
+                                <span class="form-control-required" style="display: none;">
+									*
+								</span>
+                            </div>
+                            <input name="house-number" type="string" class="form-control">
+
+                            <div class="form-control-alert-message" style="display: none;">
+                            </div>
+                        </div>
+                    </div> <!----> <!---->
+                </div> <!---->
+            </div>
+            <div class="form-control-string"><!---->
+                <div>
+                    <div class="form-control-container">
+                        <div class="form-control-label">
+                            <b> Photo of delivery </b>
+                            <span class="form-control-required" style="display: none;">
+								*
+							</span>
+                        </div>
+                        <div class="form-control-filelist">
+                            <div><!---->
+                                <div class="form-control-file-item-empty">
+                                    <label class="form-control">
+                                        +Select file
+                                        <input name="photo" type="file" accept="" style="display: none;">
+                                    </label>
+                                    <div class="form-control-alert-message">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-control-alert-message" style="display: none;">
+                            </div>
+                        </div>
+                    </div> <!---->
+                </div>
+            </div>
+            <div class="form-control-string"><!---->
+                <div>
+                    <div class="form-control-container">
+                        <div class="form-control-label">
+                            <b> Delivery video (optional) </b>
+                            <span class="form-control-required" style="display: none;">
+								*
+							</span>
+                        </div>
+                        <div class="form-control-filelist">
+                            <div><!---->
+                                <div class="form-control-file-item-empty">
+                                    <label class="form-control">
+                                        +Select file
+                                        <input name="video" type="file" accept="" style="display: none;">
+                                    </label>
+                                    <div class="form-control-alert-message">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-control-alert-message" style="display: none;">
+                            </div>
+                        </div>
+                    </div> <!---->
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center">
+
+
+                <input type="submit" class="submit1" value="Send an application">
+
+        </div>
+    </form>
+
+</div>
+
+
+</body>
+</html>
