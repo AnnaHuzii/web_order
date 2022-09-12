@@ -17,7 +17,6 @@ public class MainConfirmatin implements Command {
     @Override
     public void process(HttpServletRequest req, HttpServletResponse resp, TemplateEngine engine) throws IOException {
         CreateDaoService createOrderDaoService = new CreateDaoService();
-        String orderPost;
         Context context = new Context();
 
         String error = "Mandatory fields are not filled";
@@ -27,59 +26,47 @@ public class MainConfirmatin implements Command {
         String area = req.getParameter("area");
         String street = req.getParameter("street");
         String houseNumber = req.getParameter("house-number");
-        String photo = req.getParameter("photo");
-        String video = req.getParameter("video");
 
         Date birthDate = null;
         try {
             birthDate = Date.valueOf(LocalDate.parse(req.getParameter("birth_date")));
-        }catch (Exception e){
+        } catch (Exception e) {
             context.setVariable("error", error);
-            engine.process("order", context, resp.getWriter());
+            engine.process("orderNew", context, resp.getWriter());
             resp.getWriter().close();
         }
 
-        String clientGet = "";
+        String messenger = "";
         if (name.equals("") || surname.equals("") || phone.equals("")) {
             context.setVariable("error", error);
-            engine.process("order", context, resp.getWriter());
+            engine.process("orderNew", context, resp.getWriter());
             resp.getWriter().close();
         } else {
-            boolean MobilePhone = createOrderDaoService.MobilePhoneClient(phone);
-            if (MobilePhone) {
-//                String id = ;
-            }else {
-            UBMAppClient client = UBMAppClient.builder().
-                    Name(name + " " + surname).
-                    BirthDate(birthDate).
-                    MobilePhone(phone)
-                    .build();
-                clientGet = createOrderDaoService.creatiClient(client);
-        }
-
-            System.out.println("clientGet = " + clientGet);
-
             UsrApplication order = UsrApplication.builder().
                     UBMAppClient(name + " " + surname).
                     UBMAppDistrict(area).
                     UBMAppSteet(street).
                     UBMAppHousenumber(houseNumber).
-                    photo(photo).
-                    video(video).
-                    UBMAppStage("Добавлена з фото").
+                    UBMAppStage("Нова").
                     UBMAppSource("web-форма").
                     build();
 
-//            orderPost = createOrderDaoService.createApplication(order);
+            UBMAppClient client = UBMAppClient.builder().
+                    Name(name + " " + surname).
+                    BirthDate(birthDate).
+                    MobilePhone(phone).
+                    GivenName(name).
+                    MiddleName(surname).
+                    build();
 
-            resp.setContentType("text/html; charset=utf-8");
-
-
-            context.setVariable("reply", clientGet);
-
-            engine.process("confirmation", context, resp.getWriter());
-            resp.getWriter().close();
+            messenger = createOrderDaoService.createApplication(order,client);
         }
+        resp.setContentType("text/html; charset=utf-8");
 
+        context.setVariable("reply", messenger);
+
+        engine.process("confirmation", context, resp.getWriter());
+        resp.getWriter().close();
     }
+
 }

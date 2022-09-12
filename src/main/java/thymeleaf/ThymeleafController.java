@@ -1,6 +1,5 @@
 package thymeleaf;
 
-
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 import command.settings.CommandService;
@@ -23,7 +22,7 @@ private TemplateEngine engine;
     private ServletConfig config;
 
     @Override
-    public void init(ServletConfig config) throws ServletException  {
+    public void init(ServletConfig config)   {
         this.config = config;
         ServletContext sc = config.getServletContext();
 

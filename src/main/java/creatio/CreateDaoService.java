@@ -6,12 +6,13 @@ import creatio.client.UBMAppClient;
 import creatio.order.OrderHttp;
 import creatio.order.UsrApplication;
 
+import java.util.List;
+import java.util.StringJoiner;
+
 public class CreateDaoService {
-
-    public boolean MobilePhoneClient(String mobilePhone) {
-        boolean replyClient = true;
+    public String MobilePhoneClient(String mobilePhone) {
+        String replyClient = "";
         try {
-
             PropertiesReader propertiesReader = new PropertiesReader();
             String url = propertiesReader.getURL_CLIENT();
             replyClient = ClientHttp.allClient(url, mobilePhone);
@@ -19,43 +20,38 @@ public class CreateDaoService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        if (replyClient) {
-            return true;
-        } else {
-            return false;
-        }
+        return replyClient;
     }
 
     public String creatiClient(UBMAppClient client) {
-        boolean replyClient = true;
+        String replyClient = "";
         try {
-
             PropertiesReader propertiesReader = new PropertiesReader();
             String url = propertiesReader.getURL_CLIENT();
-
             UBMAppClient clientConnection = appClient(client);
             replyClient = ClientHttp.addClient(url, clientConnection);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        if (replyClient) {
-            return "The order has been sent successfully";
-        } else {
-            return "Your order could not be sent, there was a problem, please try again";
-        }
+        return replyClient;
     }
 
-    public String createApplication(UsrApplication order) {
+    public String createApplication(UsrApplication order, UBMAppClient client) {
+
+        String id = MobilePhoneClient(client.getMobilePhone());
+        if (id.equals("")) {
+            id = creatiClient(client);
+        }
+
         boolean connection = true;
+
         try {
 
             PropertiesReader propertiesReaderOrder = new PropertiesReader();
             String url = propertiesReaderOrder.getURL_ORDEG();
 
-            UsrApplication orderConnection = createOrder(order);
+            UsrApplication orderConnection = createOrder(order, id);
             connection = OrderHttp.sendingOrder(url, orderConnection);
 
         } catch (Exception e) {
@@ -68,14 +64,14 @@ public class CreateDaoService {
             return "Your order could not be sent, there was a problem, please try again";
         }
     }
-    public String authorization(boolean connection) {
-        String result = "";
-        if (connection) {
-            result = "Authorization was successful";
-        } else {
-            result = "Something went wrong did not log in to the system";
+
+    public String authorization(List<String> cookies) {
+
+        StringJoiner resultCookie = new StringJoiner(";");
+        for (String cookie : cookies) {
+            resultCookie.add(cookie.split(";", 2)[0]);
         }
-        return result;
+        return resultCookie.toString();
     }
 
     public static UBMAppClient appClient(UBMAppClient client) {
@@ -86,9 +82,10 @@ public class CreateDaoService {
                 .build();
     }
 
-    public static UsrApplication createOrder(UsrApplication order) {
+    public static UsrApplication createOrder(UsrApplication order, String id) {
 
         return UsrApplication.builder().
+                UBMAppClientId(id).
                 UBMAppClient(order.getUBMAppClient()).
                 UBMAppSteet(order.getUBMAppSteet()).
                 UBMAppStage(order.getUBMAppStage()).

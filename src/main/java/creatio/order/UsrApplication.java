@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 @Builder
 public class UsrApplication {
+
+    private String UBMAppClientId;
     private String UBMAppClient;
     private String UBMAppDistrict;
     private String UBMAppSteet;

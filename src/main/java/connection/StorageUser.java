@@ -3,9 +3,11 @@ package connection;
 import creatio.user.User;
 import creatio.user.UserHttp;
 
+import java.util.List;
+
 public class StorageUser {
     private static StorageUser INSTANCE;
-    private boolean connection;
+    private List<String> connection;
 
     private StorageUser() {
         try {
@@ -30,15 +32,15 @@ public class StorageUser {
         return INSTANCE;
     }
 
-    public boolean getConnection() {
+    public List<String> getConnection() {
         return connection;
     }
 
     public static User login(String userName, String password) {
 
         return User.builder().
-                userName(userName).
-                userPassword(password).build();
+                UserName(userName).
+                UserPassword(password).build();
     }
 }
 
