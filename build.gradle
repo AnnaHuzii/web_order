@@ -3,7 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.13.RELEASE'
     id 'java'
 }
-
+apply plugin: 'war'
 group 'org.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 11
@@ -52,4 +52,8 @@ tasks.named('test') {
 jar {
     baseName = 'app'
     version = '0.0.1'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
