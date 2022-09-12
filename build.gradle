@@ -29,8 +29,6 @@ dependencies {
 
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
-// https://mvnrepository.com/artifact/com.mashape.unirest/unirest-java
-    implementation "com.mashape.unirest:unirest-java:1.4.9"
 
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation 'com.google.code.gson:gson:2.9.0'
@@ -52,8 +50,4 @@ tasks.named('test') {
 jar {
     baseName = 'app'
     version = '0.0.1'
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
 }
